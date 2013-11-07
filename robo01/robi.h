@@ -27,8 +27,8 @@
 
 // Geschwindigkeitsfaktoren, sind definiert als:
 // v (cm/s) * SPEED_FACTOR = ansteuerungswert des controllers
-#define SPEED_FACTOR_LEFT 	1.035
-#define SPEED_FACTOR_RIGHT	1.035
+#define SPEED_FACTOR_LEFT 	1 // 1.035
+#define SPEED_FACTOR_RIGHT	1 // 1.035
 
 // Indexwerte der Motoren für die Controllerbefehle
 #define MOTOR_ID_LEFT 1
