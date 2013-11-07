@@ -1,0 +1,22 @@
+set terminal png
+
+set output "robi_graph_p080_i09000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p80_i9000.txt" with lines,"robi_wheeldat_right_p80_i9000.txt" with lines
+set output "robi_graph_p080_i12000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p80_i12000.txt" with lines,"robi_wheeldat_right_p80_i12000.txt" with lines
+set output "robi_graph_p080_i17000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p80_i17000.txt" with lines,"robi_wheeldat_right_p80_i17000.txt" with lines
+
+set output "robi_graph_p100_i09000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p100_i9000.txt"  with lines,"robi_wheeldat_right_p100_i9000.txt" with lines
+set output "robi_graph_p100_i12000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p100_i12000.txt"  with lines,"robi_wheeldat_right_p100_i12000.txt" with lines
+set output "robi_graph_p100_i17000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p100_i17000.txt"  with lines,"robi_wheeldat_right_p100_i17000.txt" with lines
+
+set output "robi_graph_p150_i09000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p150_i9000.txt"  with lines,"robi_wheeldat_right_p150_i9000.txt" with lines
+set output "robi_graph_p150_i12000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p150_i12000.txt"  with lines,"robi_wheeldat_right_p150_i12000.txt" with lines
+set output "robi_graph_p150_i17000.png"
+plot [0:5] [0:15] "robi_wheeldat_left_p150_i17000.txt"  with lines,"robi_wheeldat_right_p150_i17000.txt" with lines

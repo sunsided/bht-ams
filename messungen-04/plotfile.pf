@@ -1,0 +1,34 @@
+set terminal png
+
+set grid
+show grid
+
+set xlabel "Zeit [s]"
+set ylabel "Umdrehungen/Sekunde [1/s]"
+
+set output "robi_graph_p080_i09000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p80_i9000.txt" smooth bezier with lines,"robi_wheeldat_right_p80_i9000.txt" smooth bezier with lines
+
+set output "robi_graph_p080_i12000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p80_i12000.txt" smooth bezier with lines,"robi_wheeldat_right_p80_i12000.txt" smooth bezier with lines
+
+set output "robi_graph_p080_i17000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p80_i17000.txt" smooth bezier with lines,"robi_wheeldat_right_p80_i17000.txt" smooth bezier with lines
+
+set output "robi_graph_p100_i09000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p100_i9000.txt"  smooth bezier with lines,"robi_wheeldat_right_p100_i9000.txt" smooth bezier with lines
+
+set output "robi_graph_p100_i12000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p100_i12000.txt"  smooth bezier with lines,"robi_wheeldat_right_p100_i12000.txt" smooth bezier with lines
+
+set output "robi_graph_p100_i17000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p100_i17000.txt"  smooth bezier with lines,"robi_wheeldat_right_p100_i17000.txt" smooth bezier with lines
+
+set output "robi_graph_p150_i09000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p150_i9000.txt"  smooth bezier with lines,"robi_wheeldat_right_p150_i9000.txt" smooth bezier with lines
+
+set output "robi_graph_p150_i12000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p150_i12000.txt"  smooth bezier with lines,"robi_wheeldat_right_p150_i12000.txt" smooth bezier with lines
+
+set output "robi_graph_p150_i17000.png"
+plot [0:5] [0:1.5] "robi_wheeldat_left_p150_i17000.txt"  smooth bezier with lines,"robi_wheeldat_right_p150_i17000.txt" smooth bezier with lines
