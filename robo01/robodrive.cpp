@@ -95,8 +95,8 @@ void vOmegaToOmegaWheel(const double v, const double omega, double *const omega_
 	const double v_r = v + omega * halberRadabstand;
 
 	/* Umrechnung von v_rad in omega_rad in [rad/s] */
-	*omega_l = v_l / (radRadius*2.0*PI);
-	*omega_r = v_r / (radRadius*2.0*PI);
+	*omega_l = v_l / radRadius;
+	*omega_r = v_r / radRadius;
 }
 
 /**
@@ -108,12 +108,23 @@ void vOmegaToOmegaWheel(const double v, const double omega, double *const omega_
 void driveRobot(VMC::CVmc *const vmc, const double omega_l, const double omega_r)
 {
 	/* Radgeschwindigkeiten in Prozent MAX_RPM ermitteln */
-	const double motorRpmL = omega_l*60.0*GETRIEBE_FAKTOR;
+	const double motorRpmL =  omega_l*60.0*GETRIEBE_FAKTOR;
 	const double motorRpmR = -omega_r*60.0*GETRIEBE_FAKTOR;
 
 	/* Motoren ansteuern */
 	vmc->setMotorRPM(MOTOR_ID_LEFT,  motorRpmL);
 	vmc->setMotorRPM(MOTOR_ID_RIGHT, motorRpmR);
+}
+
+/**
+* @brief Wandelt Winkelgeschwindigkeit Omega des Rades in Drehzahl N des Motors um
+* @param[in] omega Winkelgeschwindigkeit des Rades [1/s]
+* @return Drehzahl des Motors
+*/
+double wheelOmegaToMotorRpm(const double omega)
+{
+	/* Es gilt omega = 2*pi*N <=> N = w/(2*pi) */
+	return omega*60.0*GETRIEBE_FAKTOR/(2.0*PI);
 }
 
 /**
@@ -125,9 +136,9 @@ void driveRobot(VMC::CVmc *const vmc, const double omega_l, const double omega_r
 */
 void driveRobot(VMC::CVmc *const vmc, const double omega_l, const double omega_r, const double seconds)
 {
-	/* Radgeschwindigkeiten in Prozent MAX_RPM ermitteln */
-	const double motorRpmL = omega_l*60.0*GETRIEBE_FAKTOR;
-	const double motorRpmR = omega_r*60.0*GETRIEBE_FAKTOR;
+	/* Radgeschwindigkeiten in Prozent MAX_RPM ermitteln  */
+	const double motorRpmL = wheelOmegaToMotorRpm(omega_l;
+	const double motorRpmR = wheelOmegaToMotorRpm(omega_r);
 
 	/* Laufzeitmessung vorbereiten */
 	const double length = (fabs(omega_l)+fabs(omega_r))*0.5 * seconds;
@@ -149,8 +160,8 @@ void driveRobot(VMC::CVmc *const vmc, const double omega_l, const double omega_r
 void driveRobotEx(VMC::CVmc *const vmc, const double omega_l, const double omega_r, const double seconds)
 {
 	/* Radgeschwindigkeiten in Prozent MAX_RPM ermitteln */
-	const double motorRpmL = omega_l*60.0*GETRIEBE_FAKTOR;
-	const double motorRpmR = omega_r*60.0*GETRIEBE_FAKTOR;
+	const double motorRpmL = wheelOmegaToMotorRpm(omega_l;
+	const double motorRpmR = wheelOmegaToMotorRpm(omega_r);
 
 	/* Laufzeitmessung vorbereiten */
 	const double length = (fabs(omega_l)+fabs(omega_r))*0.5 * seconds;
@@ -170,8 +181,8 @@ void driveRobotEx(VMC::CVmc *const vmc, const double omega_l, const double omega
 	vmc->resetMotorTicks();
 
 	/* Motoren ansteuern */
-	vmc->setMotorRPM(MOTOR_ID_LEFT,  -motorRpmL);
-	vmc->setMotorRPM(MOTOR_ID_RIGHT,  motorRpmR);
+	vmc->setMotorRPM(MOTOR_ID_LEFT,   motorRpmL);
+	vmc->setMotorRPM(MOTOR_ID_RIGHT, -motorRpmR);
 	vmc->getMotorState(MOTOR_ID_LEFT, vmc->MOTOR_TICKS_ABSOLUTE, &last_enc_l, &startTime);
 	vmc->getMotorState(MOTOR_ID_LEFT, vmc->MOTOR_TICKS_ABSOLUTE, &last_enc_r, NULL);
 
