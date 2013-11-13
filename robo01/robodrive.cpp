@@ -137,7 +137,7 @@ double wheelOmegaToMotorRpm(const double omega)
 void driveRobot(VMC::CVmc *const vmc, const double omega_l, const double omega_r, const double seconds)
 {
 	/* Radgeschwindigkeiten in Prozent MAX_RPM ermitteln  */
-	const double motorRpmL = wheelOmegaToMotorRpm(omega_l;
+	const double motorRpmL = wheelOmegaToMotorRpm(omega_l);
 	const double motorRpmR = wheelOmegaToMotorRpm(omega_r);
 
 	/* Laufzeitmessung vorbereiten */
