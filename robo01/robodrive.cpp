@@ -61,7 +61,7 @@ void stopRobotAfter(VMC::CVmc *const vmc, const double seconds, const double max
      * oder Zeit abgelaufen. */
 	while ((runTime < seconds) && (totalTicks < maximumTicks))
 	{
-		vmc->wait(1);
+		vmc->wait(5);
 
 		vmc->getMotorState(MOTOR_ID_LEFT,  vmc->MOTOR_TICKS_ABSOLUTE, &enc_l, &timestamp_l);
 		vmc->getMotorState(MOTOR_ID_RIGHT, vmc->MOTOR_TICKS_ABSOLUTE, &enc_r, &timestamp_r);
@@ -177,6 +177,7 @@ void driveRobotEx(VMC::CVmc *const vmc, const double omega_l, const double omega
 		last_enc_l=0, last_enc_r=0;
 	double runTime = 0;
 	double totalTicks = 0;
+	double endTime = seconds * 1.25; /* Fangnetz */
 
 	vmc->resetMotorTicks();
 
@@ -188,7 +189,10 @@ void driveRobotEx(VMC::CVmc *const vmc, const double omega_l, const double omega
 
 	/* So lange schleifen, bis erwartete Ticks überschritten
      * oder Zeit abgelaufen. */
-	while ((runTime < seconds) && (totalTicks < ticksExpected))
+	while (
+		(runTime < endTime) && 
+		(totalTicks < ticksExpected)
+	)
 	{
 		vmc->getMotorState(MOTOR_ID_LEFT,  vmc->MOTOR_TICKS_ABSOLUTE, &enc_l, &timestamp_l);
 		vmc->getMotorState(MOTOR_ID_RIGHT, vmc->MOTOR_TICKS_ABSOLUTE, &enc_r, &timestamp_r);
