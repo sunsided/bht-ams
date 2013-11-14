@@ -13,27 +13,12 @@
 #define _ROBODRIVE_H_
 
 #include <vmc232.h>
+#include <math.h>
 
 /**
 * @brief Rotationsgeschwindigkeit in Grad pro Sekunde
 */
 #define ROBO_DEGREE_PER_SEC	(90/2)
-
-/**
-* @brief PI
-*/ 
-#ifndef PI
-#define PI 				(3.141592654)
-#endif
-
-/**
-* @brief Wandelt Geschwindigkeiten in v-omega in Radgeschwindigkeiten um
-* @param[in] v Die Bahngeschwindigkeit des Roboters [m/s]
-* @param[in] omega Die Winkelgeschwindigkeit des Roboters [rad/s]
-* @param[out] omega_l Winkelgeschwindigkeit des linken Rades [rad/s]
-* @param[out] omega_r Winkelgeschwindigkeit des rechten Rades [rad/s]
-*/
-void vOmegaToOmegaWheel(const double v, const double omega, double *const omega_l, double *const omega_r);
 
 /**
 * @brief Hält den Roboter nach der angegebenen Zeit an

@@ -27,6 +27,7 @@
 #include "robodrive.h"
 #include "configureRobot.h"
 #include "commandLine.h"
+#include "physik.h"
 
 using namespace std;
 
@@ -97,6 +98,7 @@ int main(int argc, char **argv)
 
 	cout << "Ende." << endl;
 	vmc.setMotors(0, 0);
+	vmc.wait(1000);
 	return 0;
 }
 

@@ -28,6 +28,8 @@ using namespace std;
 #define MAX_V 0.33
 #define MAX_W 1.86
 
+#define ROBO_DEGREE_PER_SEC 45
+
 /**
 * @brief Parst die Kommandozeilenparameter
 * @param[in] argc Anzahl der Kommandozeilenparameter
@@ -54,8 +56,13 @@ int parseCommandLine(int argc, char **argv, double* v, double* omega, double* ti
 	/* Hilfetext */
 	if (argc == 1)
 	{
-		cout << "VERWENDUNG" << endl << argv[0] << " -t <ZEIT> [-v <Wert>] [-w <Wert>] [-pl <Wert>] [-pr <Wert>] [-il <Wert>] [-ir <Wert>]" << endl << endl;
-		cout << "PARAMETER BEWEGUNG" << endl
+		cout << "VERWENDUNG" << endl 
+			<< argv[0] << " -t <ZEIT> [-v <Wert>] [-w <Wert>] [-pl <Wert>] [-pr <Wert>] [-il <Wert>] [-ir <Wert>]" << endl << endl
+			<< argv[0] << " -rotate <GRAD> [-t <ZEIT>] [-pl <Wert>] [-pr <Wert>] [-il <Wert>] [-ir <Wert>]" << endl << endl;
+		cout << "PARAMETER ROTATION" << endl
+			<< "-rotate <GRAD>	Rotation in Grad" << endl
+			<< "-t <ZEIT>	Zeit in s" << endl
+		    << endl << "PARAMETER BEWEGUNG" << endl
 			<< "-t <ZEIT>	Zeit in s" << endl
 			<< "-v <WERT>	Bahngeschwindigkeit in m/s (0 .. 0.33)" << endl
 			<< "-w <WERT>	Winkelgeschwindigkeit in rad/s (-1.86 .. 1.86)" << endl
@@ -67,10 +74,39 @@ int parseCommandLine(int argc, char **argv, double* v, double* omega, double* ti
 		return 1;
 	}
 
+	/* Rotation statt Direktangabe */
+	bool rotateMode = false, regularMode = false;
+	int angle = 0.0;
+
 	/* alle Parameter durchlaufen */
 	for(int i=0; i<argc; ++i)
 	{
 		char* token = argv[i];
+
+		/* velocity */
+		if (0 == strcmp(token, "-rotate"))
+		{
+			if (i==(argc-1))
+			{
+				cerr << "Fehlender Wert für -rotate" << endl;
+				return -1;
+			}
+
+			/* parsen */
+			char *endptr;
+			angle = strtol(argv[i+1], &endptr, 10);
+			if (endptr == argv[i+1] || angle == 0)
+			{
+				cerr << "Ungültiger Wert für -rotate" << endl;
+				return -2;
+			}
+
+			/* Rotationsmodus aktivieren */
+			rotateMode = true;
+
+			/* gelesenen Wert überspringen */
+			++i;
+		}
 
 		/* velocity */
 		if (0 == strcmp(token, "-v"))
@@ -89,6 +125,9 @@ int parseCommandLine(int argc, char **argv, double* v, double* omega, double* ti
 				cerr << "Ungültiger Wert für -v" << endl;
 				return -2;
 			}
+
+			/* Regulären Modus aktivieren */
+			regularMode = true;
 
 			/* gelesenen Wert überspringen */
 			++i;
@@ -111,6 +150,9 @@ int parseCommandLine(int argc, char **argv, double* v, double* omega, double* ti
 				cerr << "Ungültiger Wert für -w" << endl;
 				return -2;
 			}
+
+			/* Regulären Modus aktivieren */
+			regularMode = true;
 
 			/* gelesenen Wert überspringen */
 			++i;
@@ -220,6 +262,27 @@ int parseCommandLine(int argc, char **argv, double* v, double* omega, double* ti
 			/* gelesenen Wert überspringen */
 			++i;
 		}
+	}
+
+	/* Modi abtesten */
+	if (regularMode && rotateMode)
+	{
+		cerr << "Kann nicht -rotate und -v/-w gleichzeitig verwenden." << endl;
+		return -2;
+	}
+
+	/* Rotation berechnen */
+	if (rotateMode)
+	{
+		/* Default-Wert für Zeit */
+		if (*time == 0.0)
+		{
+			*time = fabs(angle)/ROBO_DEGREE_PER_SEC;
+		}
+
+		/* Winkelgeschwindigkeit ermitteln */
+		const double radians = (double)angle * M_PI / 180.0;
+		*omega = radians / *time;
 	}
 
 	/* Abtesten fehlender Werte */

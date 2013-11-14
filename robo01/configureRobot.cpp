@@ -27,7 +27,7 @@
 
 using namespace std;
 
-#define MAX_RPM 1000								/*< Maximale RPM */
+#define MAX_RPM 3000							/*< Maximale RPM */
 #define MAX_ROUNDS_PER_SEC MAX_RPM*60			/*< Umwandlungsfaktor RPM in RPS */
 
 #define MOTOR_COUNT 		(2)					/*< Anzahl der Motoren */
@@ -45,11 +45,11 @@ void configureRobot(VMC::CVmc &vmc, int pl, int pr, int il, int ir)
 {
 
 	int    prop_val[] ={
-			90,					// P-Wert für Motor links
-			80};				// P-Wert für Motor rechts
+			120,					// P-Wert für Motor links
+			100};				// P-Wert für Motor rechts
 	int    integ_val[]={
-			25000,				// I-Wert für Motor links
-			20000};				// I-Wert für Motor rechts
+			9000,				// I-Wert für Motor links
+			9000};				// I-Wert für Motor rechts
 
 	if (pl > 0) prop_val[MOTOR_INDEX_LEFT] = pl;
     if (pr > 0) prop_val[MOTOR_INDEX_RIGHT] = pr;
