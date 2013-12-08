@@ -1,0 +1,3 @@
+[submodule "robo02"]
+	path = robo02
+	url = ../bht-ams-playerstage.git
