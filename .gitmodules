@@ -1,3 +1,6 @@
 [submodule "robo02"]
 	path = robo02
 	url = git@github.com:sunsided/bht-ams-playerstage.git
+[submodule "sommer"]
+	path = sommer
+	url = git@github.com:sunsided/bht-ams-sommer.git
